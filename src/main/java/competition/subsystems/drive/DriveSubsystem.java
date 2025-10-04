@@ -22,6 +22,7 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
 
     DoubleProperty dp;
 
+    public boolean isPrecisionModeOn = false;
     @Inject
     public DriveSubsystem(XCANMotorController.XCANMotorControllerFactory motorControllerFactory, ElectricalContract electricalContract, PropertyFactory pf) {
         log.info("Creating DriveSubsystem");
