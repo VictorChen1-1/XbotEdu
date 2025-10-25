@@ -12,21 +12,18 @@ public class DriveToPositionCommand extends BaseCommand {
 
     PoseSubsystem pose;
 
-    double currentPosition = 0;
-
     double goalPosition = 0;
 
-    double error = 0;
+    double d = 50;
 
-    double power = 0;
+    double p = 50;
 
-    double p = 55;
+    double previousPosition = 0;
 
-    double d = 60;
+    double currentPosition = 0;
 
-    double errorOfPreviousStep = 0;
+    double speed = 0;
 
-    double b = 0;
 
 
     @Inject
@@ -38,7 +35,6 @@ public class DriveToPositionCommand extends BaseCommand {
     public void setTargetPosition(double newGoalPosition) {
         // This method will be called by the test, and will give you a goal distance.
         // You'll need to remember this target position and use it in your calculations.
-        newGoalPosition = 5;
         goalPosition = newGoalPosition;
     }
 
@@ -55,24 +51,22 @@ public class DriveToPositionCommand extends BaseCommand {
         // - Gets the robot stop (or at least be moving really really slowly) at the
         // target position
         // How you do this is up to you. If you get stuck, ask a mentor or student for
-        // some hints!
-        b= (d*(error-errorOfPreviousStep));
+        // some hints.
         currentPosition = pose.getPosition();
-        error = goalPosition-currentPosition;
-        if(currentPosition > 5.000000000000001){
-            drive.tankDrive(power,power);
-        }
-        if(currentPosition < 4.9999999999999999){
-            drive.tankDrive(power,power);
-        }
-        power=p * error - b;
-        errorOfPreviousStep = error;
+        double error = goalPosition - currentPosition;
+        speed = currentPosition - previousPosition;
+        double power = p * error - d * speed;
+        drive.tankDrive(power,power);
+
+        previousPosition = currentPosition;
     }
     @Override
-    public boolean isFinished() {
+    public boolean isFinished(
+    ) {
         // Modify this to return true once you have met your goal,
         // and you're moving fairly slowly (ideally stopped)
-        return false;
+        boolean atGoalPosition = Math.abs(currentPosition - goalPosition) < 0.01;
+        boolean notMoving = Math.abs(speed) <0.001;
+        return atGoalPosition && notMoving;
     }
-
 }
