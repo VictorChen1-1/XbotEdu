@@ -1,3 +1,4 @@
+
 package competition.subsystems.drive;
 
 import javax.inject.Inject;
@@ -21,7 +22,6 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
     public final XCANMotorController frontRight;
 
     DoubleProperty dp;
-
     public boolean isPrecisionModeOn = false;
     @Inject
     public DriveSubsystem(XCANMotorController.XCANMotorControllerFactory motorControllerFactory, ElectricalContract electricalContract, PropertyFactory pf) {
@@ -36,15 +36,13 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
         pf.setPrefix(this);
         dp = pf.createPersistentProperty("DriveSubsystem", 1.5);
     }
-
-    public double tankDrive(double leftPower, double rightPower) {
+    public void tankDrive(double leftPower, double rightPower) {
         // You'll need to take these power values and assign them to all of the motors.
         // As an example, here is some code that has the frontLeft motor to spin
         // according to the value of leftPower:
         frontLeft.setPower(leftPower);
         // TODO: Add code to set the right motors to the rightPower value.
 
-        return leftPower;
     }
 
 
@@ -71,7 +69,7 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
 
     @Override
     public void move(XYPair translate, double rotate) {
-       throw new RuntimeException("Not yet implemented");
+        throw new RuntimeException("Not yet implemented");
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 package competition.subsystems.drive.commands;
 
 import javax.inject.Inject;
@@ -18,7 +19,6 @@ public class TogglePrecisionDriveCommand extends BaseCommand {
     public void initialize() {
         // Here, you want to call the DriveSubsystem and tell it to change its precision
         // mode.
-        drive.isPrecisionModeOn = !drive.isPrecisionModeOn;
         // This means you'll need to add a new method into DriveSubsystem, and there are
         // two
         // major ways to do this:
